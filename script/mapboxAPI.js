@@ -2,7 +2,7 @@
 //
 //
 //
-//  This is the initial code for the mapboxAPI - CAL
+//  This is the initial code for the mapboxAPI created by: CAL
 
 
 
@@ -14,7 +14,19 @@ const map = new mapboxgl.Map({
   center: [-104.9922, 39.7453], // starting position
   zoom: 17
 });
-//  Set the boundaries of the map
+
+
+//  Set the boundaries of the map - May implement this...
+//  However, do we really want to limit the users interaction to ONLY the boundaries set forth,
+//  or do we want to allow the user to select destinations all over the state of Colorado?
+//  If we limit the boundaries we will only be able to allow the user to select destinations WITHIN
+//  those boundaries.  If we leave th boundaries open, and just set an initial start point (center of the map)
+//  we can force the map to START in the downtown area, but not be confined to the downtown Denver area.
+//  What if the user wants to visit the mountains, or a ski resort, or any destination outside the downtown area?
+//  If we enforce boundaries here the user will not be able to select areas/destinations outside the downtown area.
+
+
+
 // const bounds = [
 //   [-123.069003, 45.395273],
 //   [-122.303707, 45.612333]
@@ -26,8 +38,10 @@ const map = new mapboxgl.Map({
 
 
 
-//  Variable to define starting point coordinates
+//  Variable to define starting point coordinates  --  Allow user to select this either by utilizing the users device location,
+//  or allow user to input an address as their starting point ?
 const start = [-104.9922, 39.7453];
+
 
 
 
@@ -38,7 +52,7 @@ const start = [-104.9922, 39.7453];
 
 // create a function to make a directions request
 async function getRoute(end) {
-  // make a directions request - this one uses cycling travel method (change or add variable to allow the user to select which mode of travel they would like to use)
+  // make a directions request - this one uses cycling travel method -- (change or add variable to allow the user to select which mode of travel they would like to use)
   const query = await fetch(
     `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
     { method: 'GET' }
@@ -61,7 +75,8 @@ async function getRoute(end) {
   const geojson = {
     type: 'Feature',
     properties: {},
-    geometry: {
+    geometry: 
+    {
       type: 'LineString',
       coordinates: route
     }
@@ -70,20 +85,24 @@ async function getRoute(end) {
   if (map.getSource('route')) {
     map.getSource('route').setData(geojson);
   }
-  //  Else add a new request
-  else {
+  //  Else add a new request / destination.  Can we get these to chain?  Provide the user directions to one destination, and then another, and another, etc.
+  else 
+  {
     map.addLayer({
       id: 'route',
       type: 'line',
-      source: {
+      source: 
+      {
         type: 'geojson',
         data: geojson
       },
-      layout: {
+      layout: 
+      {
         'line-join': 'round',
         'line-cap': 'round'
       },
-      paint: {
+      paint: 
+      {
         'line-color': '#3887be',
         'line-width': 5,
         'line-opacity': 0.75
@@ -92,14 +111,18 @@ async function getRoute(end) {
   }
 
 
-  // get the instructions div and add the directions to it
+  // get the instructions div and add the route directions to it
 const instructions = document.getElementById('instructions');
 const steps = data.legs[0].steps;
 
 let tripInstructions = '';
-for (const step of steps) {
+
+//  Loop to create each step of the route as its own list element
+for (const step of steps) 
+{
   tripInstructions += `<li>${step.maneuver.instruction}</li>`;
 }
+//  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
 instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min 🚴 </strong></p><ol>${tripInstructions}</ol>`;
 
 
@@ -118,11 +141,13 @@ map.on('load', () => {
       type: 'geojson',
       data: {
         type: 'FeatureCollection',
-        features: [
+        features: 
+        [
           {
             type: 'Feature',
             properties: {},
-            geometry: {
+            geometry: 
+            {
               type: 'Point',
               coordinates: start
             }
@@ -130,7 +155,9 @@ map.on('load', () => {
         ]
       }
     },
-    paint: {
+    paint: 
+    {
+      //  Marker size and color
       'circle-radius': 10,
       'circle-color': '#3887be'
     }
@@ -147,32 +174,41 @@ map.on('load', () => {
     const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
     const end = {
       type: 'FeatureCollection',
-      features: [
+      features: 
+      [
         {
           type: 'Feature',
           properties: {},
-          geometry: {
+          geometry: 
+          {
             type: 'Point',
             coordinates: coords
           }
         }
       ]
     };
-    if (map.getLayer('end')) {
+    if (map.getLayer('end')) 
+    {
       map.getSource('end').setData(end);
-    } else {
+    } 
+    else 
+    {
       map.addLayer({
         id: 'end',
         type: 'circle',
-        source: {
+        source: 
+        {
           type: 'geojson',
-          data: {
+          data: 
+          {
             type: 'FeatureCollection',
-            features: [
+            features: 
+            [
               {
                 type: 'Feature',
                 properties: {},
-                geometry: {
+                geometry: 
+                {
                   type: 'Point',
                   coordinates: coords
                 }
@@ -180,7 +216,9 @@ map.on('load', () => {
             ]
           }
         },
-        paint: {
+        paint: 
+        {
+          //  Marker size and color
           'circle-radius': 10,
           'circle-color': '#f30'
         }
@@ -194,5 +232,6 @@ map.on('load', () => {
 
 
 });
+
 
 
