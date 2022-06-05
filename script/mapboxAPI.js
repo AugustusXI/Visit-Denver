@@ -248,7 +248,7 @@ $("#searchBar").submit(function(e)
   e.preventDefault();
   
 var searchText = encodeURI($("#search").val());
-$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ", null, function(response)
+$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us", null, function(response)
 {
   $("#searchSelect").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
 
@@ -266,7 +266,7 @@ $("#destination").submit(function(e)
   e.preventDefault();
   
 var searchText = encodeURI($("#searchD").val());
-$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ", null, function(response)
+$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us", null, function(response)
 {
   $("#searchSelectD").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
 
@@ -297,12 +297,13 @@ $("#searchSelect").change(function()
 $("#searchSelectD").change(function()
 {
   var searchCoordinates = $("#searchSelectD").val();
-  setDestination(searchCoordinates.split(";"));
+  var destinationCoords = searchCoordinates.split(";");
+  setDestination(destinationCoords);
   // setStartingPoint();
-  // map.flyTo({
-  //   center: start,
-  //   essential: true // this animation is considered essential with respect to prefers-reduced-motion
-  //   });
+  map.flyTo({
+    center: destinationCoords,
+    essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
 });
 
 //---------------------------------------------------------------------------------------
