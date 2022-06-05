@@ -66,6 +66,7 @@ const map = new mapboxgl.Map({
 var lastDestinationCoords = [];
 var start = [-104.9922, 39.7453];
 var mode = "driving";
+var layerID = "initialID";
 
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
@@ -181,61 +182,63 @@ instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration /
   {
     mode = $("input[name='mapRadio']:checked").val();
     const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
-    lastDestinationCoords = coords;
-    const end = {
-      type: 'FeatureCollection',
-      features: 
-      [
-        {
-          type: 'Feature',
-          properties: {},
-          geometry: 
-          {
-            type: 'Point',
-            coordinates: coords
-          }
-        }
-      ]
-    };
-    if (map.getLayer('end')) 
-    {
-      map.getSource('end').setData(end);
-    } 
-    else 
-    {
-      map.addLayer({
-        id: 'end',
-        type: 'circle',
-        source: 
-        {
-          type: 'geojson',
-          data: 
-          {
-            type: 'FeatureCollection',
-            features: 
-            [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: 
-                {
-                  type: 'Point',
-                  coordinates: coords
-                }
-              }
-            ]
-          }
-        },
-        paint: 
-        {
-          //  Marker size and color
-          'circle-radius': 10,
-          'circle-color': '#f30'
-        }
-      });
-      $("#mapRadio").hide();
-    }
-    getRoute(coords);
+    setDestination(coords);
+    // lastDestinationCoords = coords;
+
+    // const end = {
+    //   type: 'FeatureCollection',
+    //   features: 
+    //   [
+    //     {
+    //       type: 'Feature',
+    //       properties: {},
+    //       geometry: 
+    //       {
+    //         type: 'Point',
+    //         coordinates: coords
+    //       }
+    //     }
+    //   ]
+    // };
+    // if (map.getLayer('end')) 
+    // {
+    //   map.getSource('end').setData(end);
+    // } 
+    // else 
+    // {
+    //   map.addLayer({
+    //     id: 'end',
+    //     type: 'circle',
+    //     source: 
+    //     {
+    //       type: 'geojson',
+    //       data: 
+    //       {
+    //         type: 'FeatureCollection',
+    //         features: 
+    //         [
+    //           {
+    //             type: 'Feature',
+    //             properties: {},
+    //             geometry: 
+    //             {
+    //               type: 'Point',
+    //               coordinates: coords
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     },
+    //     paint: 
+    //     {
+    //       //  Marker size and color
+    //       'circle-radius': 10,
+    //       'circle-color': '#f30'
+    //     }
+    //   });
+    //   $("#mapRadio").hide();
+    // }
+    // getRoute(coords);
   });
 
 
@@ -257,7 +260,25 @@ $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json
 });
 
 //---------------------------------------------------------------------------------------
-var layerID = "initialID";
+//  Destination submit handler
+$("#destination").submit(function(e)
+{
+  e.preventDefault();
+  
+var searchText = encodeURI($("#searchD").val());
+$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ", null, function(response)
+{
+  $("#searchSelectD").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
+
+  for (let i = 0; i < 5; i++) {
+    $("#searchSelectD").append("<option value=" + response.features[i].geometry.coordinates[0] + ";" + response.features[i].geometry.coordinates[1] + ">" + response.features[i].place_name + "</option>")
+  }
+  $("#searchSelectD").addClass("show");
+});
+});
+
+//---------------------------------------------------------------------------------------
+//  Starting location change handler
 
 $("#searchSelect").change(function()
 {
@@ -271,6 +292,21 @@ $("#searchSelect").change(function()
 });
 
 //---------------------------------------------------------------------------------------
+
+//  Destination change handler
+$("#searchSelectD").change(function()
+{
+  var searchCoordinates = $("#searchSelectD").val();
+  setDestination(searchCoordinates.split(";"));
+  // setStartingPoint();
+  // map.flyTo({
+  //   center: start,
+  //   essential: true // this animation is considered essential with respect to prefers-reduced-motion
+  //   });
+});
+
+//---------------------------------------------------------------------------------------
+
 function setStartingPoint()
 {
   if (map.getLayer(layerID)) 
@@ -321,3 +357,66 @@ $("#waypointButton").click(function()
   start = lastDestinationCoords;
   setStartingPoint();
 });
+
+
+//---------------------------------------------------------------------------------------
+// function for setting a destination
+function setDestination(coords)
+{
+  lastDestinationCoords = coords;
+
+  const end = {
+    type: 'FeatureCollection',
+    features: 
+    [
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: 
+        {
+          type: 'Point',
+          coordinates: coords
+        }
+      }
+    ]
+  };
+  if (map.getLayer('end')) 
+  {
+    map.getSource('end').setData(end);
+  } 
+  else 
+  {
+    map.addLayer({
+      id: 'end',
+      type: 'circle',
+      source: 
+      {
+        type: 'geojson',
+        data: 
+        {
+          type: 'FeatureCollection',
+          features: 
+          [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: 
+              {
+                type: 'Point',
+                coordinates: coords
+              }
+            }
+          ]
+        }
+      },
+      paint: 
+      {
+        //  Marker size and color
+        'circle-radius': 10,
+        'circle-color': '#f30'
+      }
+    });
+    $("#mapRadio").hide();
+  }
+  getRoute(coords);
+}
