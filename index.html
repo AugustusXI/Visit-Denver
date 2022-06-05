@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,6 +19,13 @@
  </style>
   <title>Visit Denver</title>
 </head>
+<body>
+
+
+  <div id="map" style="height: 800px; width: 800px;"></div>
+  <div id="instructions" style="height: 400px; width: 400px;"></div>
+
+
 <ul id="dropdown1" class="dropdown-content">
   <li><a href="#!">one</a></li>
   <li><a href="#!">two</a></li>
@@ -31,7 +40,6 @@
       </ul>
     </div>
   </nav>
-  <body>
   <section>
     <div class="row">
       <div class="col s12 m12">
@@ -59,13 +67,14 @@
             <span class="card-title">Things to do</span>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis aliquam orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
             <div class="places-search">
-              <form>
+              <form id="searchBar">
                 <div class="input-field">
                   <input id="search" type="search" required>
                   <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                   <i class="material-icons">close</i>
                 </div>
               </form>
+              
             </div>
           </div>
           </div>
@@ -78,7 +87,7 @@
               <i class="material-icons">favorite</i>
             </a>
           </div>
-          <div class="card-content">
+          <!-- <div class="card-content">
             <span class="card-title">Food to eat</span>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quis aliquam orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
             <div class="nav-wrapper">
@@ -90,7 +99,7 @@
                 </div>
               </form>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
