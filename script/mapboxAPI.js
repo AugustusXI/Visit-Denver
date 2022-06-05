@@ -35,6 +35,18 @@ const map = new mapboxgl.Map({
 
 
 
+//  Add an address search bar to the map.  
+//  This will be used to search for locations, and could serve to set the start coords
+map.addControl(
+  new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  mapboxgl: mapboxgl,
+  zoom: 18,
+  countries: "US",
+  enableGeolocation: true,
+  addressAccuracy: "street"
+  }), "top-left"
+  );
 
 
 
