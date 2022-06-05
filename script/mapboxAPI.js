@@ -35,18 +35,25 @@ const map = new mapboxgl.Map({
 
 
 
+// map.addControl(
+//   new MapboxDirections({
+//       accessToken: mapboxgl.accessToken
+//   }),
+//   'top-left'
+// );
+
 //  Add an address search bar to the map.  
 //  This will be used to search for locations, and could serve to set the start coords
-map.addControl(
-  new MapboxGeocoder({
-  accessToken: mapboxgl.accessToken,
-  mapboxgl: mapboxgl,
-  zoom: 18,
-  countries: "US",
-  enableGeolocation: true,
-  addressAccuracy: "street"
-  }), "top-left"
-  );
+// map.addControl(
+//   new MapboxGeocoder({
+//   accessToken: mapboxgl.accessToken,
+//   mapboxgl: mapboxgl,
+//   zoom: 18,
+//   countries: "US",
+//   enableGeolocation: true,
+//   addressAccuracy: "street"
+//   }), "top-left"
+//   );
 
 
 
@@ -56,8 +63,9 @@ map.addControl(
 
 //  Variable to define starting point coordinates  --  Allow user to select this either by utilizing the users device location,
 //  or allow user to input an address as their starting point ?
-const start = [-104.9922, 39.7453];
-
+var lastDestinationCoords = [];
+var start = [-104.9922, 39.7453];
+var mode = "driving";
 
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
@@ -65,7 +73,7 @@ async function getRoute(end)
 {
   // make a directions request - this one uses cycling travel method -- (change or add variable to allow the user to select which mode of travel they would like to use)
   const query = await fetch(
-    `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+    `https://api.mapbox.com/directions/v5/mapbox/${mode}/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
     { method: 'GET' }
     );
   const json = await query.json();
@@ -113,66 +121,56 @@ const steps = data.legs[0].steps;
 
 let tripInstructions = '';
 
+if(start[0] !== end[0] || start[1] !== end[1])
+{
 //  Loop to create each step of the route as its own list element
 for (const step of steps) 
 {
   tripInstructions += `<li>${step.maneuver.instruction}</li>`;
 }
 //  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
-instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min 🚴 </strong></p><ol>${tripInstructions}</ol>`;
+instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min </strong></p><ol>${tripInstructions}</ol>`;
+}
 }
 
 //---------------------------------------------------------------------------------
-map.on('load', function() 
-{
-  // make an initial directions request that
-  // starts and ends at the same location
-  getRoute(start);
+// map.on('load', function() 
+// {
+//   // make an initial directions request that
+//   // starts and ends at the same location
+//   getRoute(start);
 
-  // Add starting point to the map
-  map.addLayer({
-    id: 'point',
-    type: 'circle',
-    source: {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: 
-        [
-          {
-            type: 'Feature',
-            properties: {},
-            geometry: 
-            {
-              type: 'Point',
-              coordinates: start
-            }
-          }
-        ]
-      }
-    },
-    paint: 
-    {
-      //  Marker size and color
-      'circle-radius': 10,
-      'circle-color': '#3887be'
-    }
-  });
-
-//   // Add geolocate control to the map.
-// map.addControl(
-//   new mapboxgl.GeolocateControl({
-//   positionOptions: {
-//   enableHighAccuracy: true
-//   },
-//   // When active the map will receive updates to the device's location as it changes.
-//   trackUserLocation: true,
-//   // Draw an arrow next to the location dot to indicate which direction the device is heading.
-//   showUserHeading: true
-//   })
-//   );
+//   // Add starting point to the map
+//   map.addLayer({
+//     id: 'point',
+//     type: 'circle',
+//     source: {
+//       type: 'geojson',
+//       data: {
+//         type: 'FeatureCollection',
+//         features: 
+//         [
+//           {
+//             type: 'Feature',
+//             properties: {},
+//             geometry: 
+//             {
+//               type: 'Point',
+//               coordinates: start
+//             }
+//           }
+//         ]
+//       }
+//     },
+//     paint: 
+//     {
+//       //  Marker size and color
+//       'circle-radius': 10,
+//       'circle-color': '#3887be'
+//     }
+//   });
   
-});
+// });
 
 
 
@@ -181,7 +179,9 @@ map.on('load', function()
 //  destination, and adding a line to represent travel directions
   map.on('click', function(event)
   {
+    mode = $("input[name='mapRadio']:checked").val();
     const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+    lastDestinationCoords = coords;
     const end = {
       type: 'FeatureCollection',
       features: 
@@ -233,24 +233,91 @@ map.on('load', function()
           'circle-color': '#f30'
         }
       });
+      $("#mapRadio").hide();
     }
     getRoute(coords);
   });
 
 
-
+//---------------------------------------------------------------------------------------
 $("#searchBar").submit(function(e)
 {
   e.preventDefault();
   
 var searchText = encodeURI($("#search").val());
-console.log(searchText);
 $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ", null, function(response)
 {
-  console.log(response);
+  $("#searchSelect").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
+
+  for (let i = 0; i < 5; i++) {
+    $("#searchSelect").append("<option value=" + response.features[i].geometry.coordinates[0] + ";" + response.features[i].geometry.coordinates[1] + ">" + response.features[i].place_name + "</option>")
+  }
+  $("#searchSelect").addClass("show");
+});
 });
 
+//---------------------------------------------------------------------------------------
+var layerID = "initialID";
+
+$("#searchSelect").change(function()
+{
+  var searchCoordinates = $("#searchSelect").val();
+  start = searchCoordinates.split(";");
+  setStartingPoint();
+  map.flyTo({
+    center: start,
+    essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+});
+
+//---------------------------------------------------------------------------------------
+function setStartingPoint()
+{
+  if (map.getLayer(layerID)) 
+  {
+    map.removeLayer(layerID);
+    layerID = `l${getTime()}`;
+  }
+
+  getRoute(start);
+  $("#mapRadio").show();
+
+ // Add starting point to the map
+  map.addLayer({
+    id: layerID,
+    type: 'circle',
+    source: {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: 
+        [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: 
+            {
+              type: 'Point',
+              coordinates: start
+            }
+          }
+        ]
+      }
+    },
+    paint: 
+    {
+      //  Marker size and color
+      'circle-radius': 10,
+      'circle-color': '#3887be'
+    }
+  });
+  }
 
 
-  // <option value="0">Select</option>
+//---------------------------------------------------------------------------------------
+
+$("#waypointButton").click(function()
+{
+  start = lastDestinationCoords;
+  setStartingPoint();
 });

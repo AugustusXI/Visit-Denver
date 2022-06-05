@@ -1,0 +1,44 @@
+select.show{
+  display: block;
+}
+
+#instructions{
+  overflow-y: scroll;
+}
+
+#map{
+  height: 800px;
+  width: 65%;
+  display: inline-block;
+  padding: 20px;
+  margin: 20px;
+}
+
+#instructions{
+  height: 800px;
+  width: 30%;
+  display: inline-block;
+  padding: 20px;
+  margin: 20px;
+
+}
+
+#mapRadio{
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+}
+
+#mapRadio input{
+  position: relative;
+  opacity: 1;
+  margin-left: 25px;
+  pointer-events: auto;
+
+}
+
+#waypointButton{
+  display: block;
+  padding: 20px;
+  margin: 20px;
+}
