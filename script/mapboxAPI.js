@@ -296,6 +296,7 @@ $("#searchSelect").change(function()
 //  Destination change handler
 $("#searchSelectD").change(function()
 {
+  mode = $("input[name='mapRadio']:checked").val();
   var searchCoordinates = $("#searchSelectD").val();
   var destinationCoords = searchCoordinates.split(";");
   setDestination(destinationCoords);
