@@ -241,6 +241,7 @@ $("#searchSelectD").change(function()
     currentDestination = searchSelectD.options[searchSelectD.selectedIndex].text
     $("#destinationCardTitle").html("Would you like to add another destination to your trip?");
     $("#destinationCardInstructions").show();
+    $("#mapRadioTitle").hide();
 });
 
 //---------------------------------------------------------------------------------------
@@ -366,5 +367,5 @@ $("#newStartButton").click(function()
 {
   $("#searchBox").show();
   $("#destinationCardInstructions").hide();
-  $("#destinationCardTitle").html("Search for your destination");
+  $("#destinationCardTitle").html("Add another destination to your trip here.");
 });
