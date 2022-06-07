@@ -52,7 +52,8 @@ select.show{
 
 #map{
   height: 800px;
-  width: 65%;
+  min-height: 600px;
+  flex: 60%;
   display: inline-block;
   padding: 20px;
   margin: 20px 30px 30px 30px;
@@ -60,14 +61,23 @@ select.show{
 
 #instructions{
   height: 800px;
-  width: 30%;
+  min-height: 600px;
+  flex: 33%;
+  /* width:100%; */
   display: inline-block;
   margin: 20px;
+}
 
+#mapInstructionsContainer{
+  display: flex;
 }
 
 #mapRadio{
-  width: 22%;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 22%;
+  width: 100%;
+  min-width: fit-content;
 }
 
 #mapRadio input{
@@ -90,7 +100,7 @@ select.show{
   display: inline-block;
   padding: 20px;
   margin: 0px 30px;
-  width: 20%;
+  max-width: 20%;
   border-radius: 5px;
 }
 
@@ -98,10 +108,22 @@ select.show{
   display: inline-block;
   padding: 20px;
   margin: 0px 30px;
-  width: 20%;
+  max-width: 20%;
   border-radius: 5px;
 }
 
 h6{
   font-weight: 400;
+}
+
+@media screen and (max-width: 750px){
+  #mapInstructionsContainer{
+    flex-direction: column;
+
+  }
+
+  /* #mapRadio{
+    display: flex;
+    flex-direction: column;
+  } */
 }
