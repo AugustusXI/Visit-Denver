@@ -11,7 +11,7 @@ select.show{
   width: 65%;
   display: inline-block;
   padding: 20px;
-  margin: 20px;
+  margin: 30px;
 }
 
 #instructions{
@@ -24,8 +24,6 @@ select.show{
 }
 
 #mapRadio{
-  padding: 10px;
-  margin: 10px;
   display: block;
   width: 35%;
 }
@@ -33,8 +31,8 @@ select.show{
 #mapRadio input{
   position: relative;
   opacity: 1;
-  margin-left: 25px;
   pointer-events: auto;
+  margin-left: 30px; 
 
 }
 
