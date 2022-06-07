@@ -1,14 +1,21 @@
 #pageTitle{
-  font-size: 24px;
-  padding-left: 80px;
+  font-size: 48px;
+  padding-left: 10%;
 }
 
 #itinerary{
-  font-size: 24px;
+  font-size: 48px;
+}
+
+nav{
+  background-image: url(../images/denver-park2400x300.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 250px;
 }
 
 .nav-wrapper ul{
-  padding-right: 80px;
+  padding-right: 10%;
 }
 
 #descriptionDenver{
