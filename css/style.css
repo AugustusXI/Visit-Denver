@@ -99,16 +99,18 @@ select.show{
 #waypointButton{
   display: inline-block;
   padding: 20px;
-  margin: 0px 30px;
+  margin: 10px 30px;
   max-width: 20%;
+  min-width: 390px;
   border-radius: 5px;
 }
 
 #newStartButton{
   display: inline-block;
   padding: 20px;
-  margin: 0px 30px;
+  margin: 10px 30px;
   max-width: 20%;
+  min-width: 390px; 
   border-radius: 5px;
 }
 
@@ -116,7 +118,7 @@ h6{
   font-weight: 400;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 850px){
   #mapInstructionsContainer{
     flex-direction: column;
 
