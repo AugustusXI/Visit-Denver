@@ -24,8 +24,8 @@ select.show{
 }
 
 #mapRadio{
-  display: block;
-  width: 35%;
+  display: inline-block;
+  width: 22%;
 }
 
 #mapRadio input{
@@ -37,7 +37,14 @@ select.show{
 }
 
 #waypointButton{
-  display: block;
+  display: inline-block;
+  padding: 20px;
+  margin: 30px;
+  width: 20%;
+}
+
+#newStartButton{
+  display: inline-block;
   padding: 20px;
   margin: 30px;
   width: 20%;

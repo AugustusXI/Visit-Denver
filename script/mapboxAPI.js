@@ -74,7 +74,7 @@ map.setMaxBounds(bounds);
 
 
 $("#destinationSearchBox").hide();
-$("#waypointButton").hide();
+// $("#waypointButton").hide();
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
 async function getRoute(end) 
@@ -147,8 +147,8 @@ if(lastTripDirections)
 else{
 //  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
 instructions.innerHTML = `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
-lastTripDirections = tripInstructions;
 }
+lastTripDirections = tripInstructions;
 }
 }
 
@@ -199,8 +199,7 @@ $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json
   for (let i = 0; i < 5; i++) {
     $("#searchSelectD").append("<option value=" + response.features[i].geometry.coordinates[0] + ";" + response.features[i].geometry.coordinates[1] + ">" + response.features[i].place_name + "</option>")
   }
-  $("#searchSelectD").addClass("show");
- 
+  $("#searchSelectD").addClass("show"); 
 });
 });
 
@@ -234,6 +233,7 @@ $("#searchSelectD").change(function()
     });
     $("#waypointButton").show();
     currentDestination = searchSelectD.options[searchSelectD.selectedIndex].text
+    $("#searchBox").hide();
 });
 
 //---------------------------------------------------------------------------------------
