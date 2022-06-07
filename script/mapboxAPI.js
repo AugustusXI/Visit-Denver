@@ -27,11 +27,11 @@ const map = new mapboxgl.Map({
 
 
 
-// const bounds = [
-//   [-123.069003, 45.395273],
-//   [-122.303707, 45.612333]
-// ];
-// map.setMaxBounds(bounds);
+const bounds = [
+  [-109.02988935088155, 36.99671558478978],
+  [-102.0743378757649, 40.972669291459]
+];
+map.setMaxBounds(bounds);
 
 
 
@@ -197,7 +197,7 @@ $("#searchBar").submit(function(e)
   e.preventDefault();
   
 var searchText = encodeURI($("#search").val());
-$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us", null, function(response)
+$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us&autocomplete=true&bbox=-109.02988935088155,36.99671558478978,-102.0743378757649,40.972669291459", null, function(response)
 {
   $("#searchSelect").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
 
@@ -217,7 +217,7 @@ $("#destination").submit(function(e)
   e.preventDefault();
   
 var searchText = encodeURI($("#searchD").val());
-$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us", null, function(response)
+$.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us&autocomplete=true&bbox=-109.02988935088155,36.99671558478978,-102.0743378757649,40.972669291459", null, function(response)
 {
   $("#searchSelectD").empty().append("<option value=\"0\" selected>Select your destination below</option>");
 
