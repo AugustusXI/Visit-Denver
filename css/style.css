@@ -6,15 +6,20 @@ select.show{
   overflow-y: scroll;
 }
 
-#destinationCardTitle{
-  font-size: 125%;
+.card .card-title{
+  font-size: 32px;
   font-weight: 400;
 
 }
 
+.card-content p{
+  font-size: 16px;
+}
+
 #destinationCardinstructions{
-  font-size: 125%;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 500;
+  font-style: italic;
 }
 
 
