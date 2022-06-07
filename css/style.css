@@ -62,7 +62,7 @@ select.show{
 #instructions{
   height: 800px;
   min-height: 600px;
-  flex: 33%;
+  flex: 40%;
   /* width:100%; */
   display: inline-block;
   margin: 20px;
@@ -75,7 +75,7 @@ select.show{
 #mapRadio{
   display: flex;
   flex-wrap: wrap;
-  max-width: 22%;
+  flex: 25%;
   width: 100%;
   min-width: fit-content;
 }
@@ -123,9 +123,4 @@ h6{
     flex-direction: column;
 
   }
-
-  /* #mapRadio{
-    display: flex;
-    flex-direction: column;
-  } */
 }
