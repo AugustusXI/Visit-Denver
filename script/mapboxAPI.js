@@ -13,17 +13,20 @@ var start = [-104.9922, 39.7453];
 var mode = "driving";
 //  Initial map layer ID
 var layerID = "initialID";
+//  initialization of lastTripDirections to store the previous directions for concatenation with a new set of directions
 var lastTripDirections = "";
+//  initialization of currentDestination for later use in directions instructions
 var currentDestination = "";
+//  initialization of previousDestination for later use in directions instructions
 var previousDestination = "";
 
-//  Mapbox info - 
+//  Mapbox info - This does all the work to create the map on page load
 mapboxgl.accessToken = "pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ";
 const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [-104.9922, 39.7453], // starting position
-  zoom: 17
+  style: 'mapbox://styles/mapbox/streets-v11', // map style
+  center: [-104.9922, 39.7453], //  starting position
+  zoom: 17  //  starting zoom level on page load.  This can be changed by a simple roll of the mouse wheel 
 });
 
 
