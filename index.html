@@ -64,11 +64,9 @@
               <i class="material-icons">favorite</i>
             </a>
           </div>
-
-
           <div class="card-content">
             <span class="card-title">Search for a starting location</span>
-            <p>Select your stating location here.  You can search for an address, or places like Denver Union Station or Denver Natural History Museum.  Please include the city for best search results! </p>
+            <p id="startingPointCardInstructions">Select your stating location here.  You can search for an address, or places like Denver Union Station or Denver Natural History Museum.  Please include the city for best search results!</p>
             <div class="places-search">
               <form id="searchBar">
                 <div class="input-field">
@@ -79,11 +77,11 @@
               </form>
               <select name="searchSelect" id="searchSelect"></select>
             </div>
-          </div>
-          
-          
+          </div>      
         </div>
       </div>
+
+
       <div id="destinationSearchBox" class="col s12 l6">
         <div class="card">
           <div class="card-image">
@@ -94,7 +92,7 @@
           </div>
           <div class="card-content">
             <span id="destinationCardTitle" class="card-title">Search for your destination</span>
-            <p id="destinationCardinstructions">(You must first click the Start trip from my last (current) destination button) </p>
+            <p id="destinationCardInstructions">(You must first click the Start trip from my last (current) destination button) </p>
             <p>Search for a destination here.  You can search for an address or places like Denver Union Station or Denver Natural History Museum.  Please include the city for best search results!  You may also click on a location to set your destination</p>
             <div class="nav-wrapper">
               <form id="destination">

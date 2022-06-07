@@ -77,7 +77,7 @@ map.setMaxBounds(bounds);
 $("#destinationSearchBox").hide();
 $("#waypointButton").hide();
 $("#newStartButton").hide();
-$("#destinationCardinstructions").hide();
+$("#destinationCardInstructions").hide();
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
 async function getRoute(end) 
@@ -239,8 +239,8 @@ $("#searchSelectD").change(function()
     $("#waypointButton").show();
     $("#newStartButton").show();
     currentDestination = searchSelectD.options[searchSelectD.selectedIndex].text
-    $("#destinationCardTitle").html("Search for another destination?");
-    $("#destinationCardinstructions").show();
+    $("#destinationCardTitle").html("Would you like to add another destination to your trip?");
+    $("#destinationCardInstructions").show();
 });
 
 //---------------------------------------------------------------------------------------
@@ -360,8 +360,11 @@ function setDestination(coords)
   getRoute(coords);
 }
 
-
+//---------------------------------------------------------------------------------------
+//  Click handler to show the search box again upon users request
 $("#newStartButton").click(function()
 {
   $("#searchBox").show();
+  $("#destinationCardInstructions").hide();
+  $("#destinationCardTitle").html("Search for your destination");
 });
