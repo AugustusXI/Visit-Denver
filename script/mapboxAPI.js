@@ -9,7 +9,7 @@
 var lastDestinationCoords = [];
 //  Variable to define starting point coordinates
 var start = [-104.9922, 39.7453];
-//  Variable to determine which mode of transportation the user wants to use
+//  Variable to determine which mode of transportation the user wants to use - defaults to driving
 var mode = "driving";
 //  Initial map layer ID
 var layerID = "initialID";
