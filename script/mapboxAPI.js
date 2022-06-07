@@ -15,6 +15,7 @@ var mode = "driving";
 var layerID = "initialID";
 var lastTripDirections = "";
 var currentDestination = "";
+var previousDestination = "";
 
 //  Mapbox info - 
 mapboxgl.accessToken = "pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ";
@@ -144,13 +145,14 @@ for (const step of steps)
 }
 if(lastTripDirections)
 {
-  instructions.innerHTML = lastTripDirections + `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+  instructions.innerHTML = lastTripDirections + `<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
 }
 else{
 //  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
 instructions.innerHTML = `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
 }
 lastTripDirections = tripInstructions;
+previousDestination = currentDestination;
 }
 }
 
