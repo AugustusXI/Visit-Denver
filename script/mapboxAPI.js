@@ -2,7 +2,7 @@
 //
 //
 //
-//  This is the initial code for the mapboxAPI - CAL
+//  This is the code for the mapboxAPI - Created by Chris Ledford
 
 //  Global variables
 //  Coordinates of the users last destination
@@ -27,16 +27,8 @@ const map = new mapboxgl.Map({
 });
 
 
-//  Set the boundaries of the map - May implement this...
-//  However, do we really want to limit the users interaction to ONLY the boundaries set forth,
-//  or do we want to allow the user to select destinations all over the state of Colorado?
-//  If we limit the boundaries we will only be able to allow the user to select destinations WITHIN
-//  those boundaries.  If we leave th boundaries open, and just set an initial start point (center of the map)
-//  we can force the map to START in the downtown area, but not be confined to the downtown Denver area.
-//  What if the user wants to visit the mountains, or a ski resort, or any destination outside the downtown area?
-//  If we enforce boundaries here the user will not be able to select areas/destinations outside the downtown area.
-
-
+//  Set the boundaries of the map - this has been implemented to set the Colorado border as the bounds
+//  You cannot view more than the state of Colorado with this functionality
 
 const bounds = [
   [-109.02988935088155, 36.99671558478978],
@@ -73,7 +65,7 @@ map.setMaxBounds(bounds);
 
 
 
-
+//  Hide HTML elements upon page load for later use
 $("#destinationSearchBox").hide();
 $("#waypointButton").hide();
 $("#newStartButton").hide();
@@ -123,6 +115,7 @@ async function getRoute(end)
         'line-cap': 'round'
       },
       paint: {
+        // route line size and color
         'line-color': '#3887be',
         'line-width': 5,
         'line-opacity': 0.75
@@ -145,10 +138,11 @@ for (const step of steps)
 }
 if(lastTripDirections)
 {
+  //  If there are existing directions for a last trip concatenate new trip directions to last trip directions
   instructions.innerHTML = lastTripDirections + `<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
 }
 else{
-//  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
+//  Install initial trip directions and store them to lastTripDirections for later use
 instructions.innerHTML = `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
 }
 lastTripDirections = tripInstructions;
@@ -176,6 +170,8 @@ $("#searchBar").submit(function(e)
   e.preventDefault();
   
 var searchText = encodeURI($("#search").val());
+//  Geocoding API call - this limits the search results to the USA and also limits any search results to the bbox (boundary box)
+//  established by the coordinates below.  Coordinates are for the SW and NE corners of Colorado encompassing the entire state
 $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us&autocomplete=true&bbox=-109.02988935088155,36.99671558478978,-102.0743378757649,40.972669291459", null, function(response)
 {
   $("#searchSelect").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
@@ -196,6 +192,8 @@ $("#destination").submit(function(e)
   e.preventDefault();
   
 var searchText = encodeURI($("#searchD").val());
+//  Geocoding API call - this limits the search results to the USA and also limits any search results to the bbox (boundary box)
+//  established by the coordinates below.  Coordinates are for the SW and NE corners of Colorado encompassing the entire state
 $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us&autocomplete=true&bbox=-109.02988935088155,36.99671558478978,-102.0743378757649,40.972669291459", null, function(response)
 {
   $("#searchSelectD").empty().append("<option value=\"0\" selected>Select your destination below</option>");
@@ -208,13 +206,15 @@ $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json
 });
 
 //---------------------------------------------------------------------------------------
-//  Starting location change handler
+//  Starting location change handler - once the user has made a selection this handler
+//  submits that selection as the starting location.
 
 $("#searchSelect").change(function()
 {
   var searchCoordinates = $("#searchSelect").val();
   start = searchCoordinates.split(";");
   setStartingPoint();
+    //  allows the map to fly to, or center on the selected starting location
   map.flyTo({
     center: start,
     essential: true 
@@ -223,14 +223,15 @@ $("#searchSelect").change(function()
 
 //---------------------------------------------------------------------------------------
 
-//  Destination change handler
+//  Destination location change handler - once the user has made a selection this handler
+//  submits that selection as the destination.
 $("#searchSelectD").change(function()
 {
   mode = $("input[name='mapRadio']:checked").val();
   var searchCoordinates = $("#searchSelectD").val();
   var destinationCoords = searchCoordinates.split(";");
   setDestination(destinationCoords);
-  // setStartingPoint();
+  //  allows the map to fly to, or center on the selected destination
   map.flyTo({
     center: destinationCoords,
     essential: true 
@@ -248,6 +249,8 @@ $("#searchSelectD").change(function()
 //  Function to set a starting point on the map. (blue dot)
 function setStartingPoint()
 {
+  //  If there is already a layer with the current layerID, remove that layer
+  //  and create a new unique layer so the user can view the starting and destination points
   if (map.getLayer(layerID)) 
   {
     map.removeLayer(layerID);
@@ -257,7 +260,7 @@ function setStartingPoint()
   getRoute(start);
   $("#mapRadio").show();
 
- // Add starting point to the map
+ // Add starting point layer to the map
   map.addLayer({
     id: layerID,
     type: 'circle',
@@ -300,7 +303,7 @@ $("#waypointButton").click(function()
 
 
 //---------------------------------------------------------------------------------------
-// function for setting a destination
+// function for setting a destination (red dot)
 function setDestination(coords)
 {
   lastDestinationCoords = coords;
@@ -362,10 +365,13 @@ function setDestination(coords)
 }
 
 //---------------------------------------------------------------------------------------
-//  Click handler to show the search box again upon users request
+//  Click handler to show the search box again upon users request and allow the user to create 
+//  a new starting location via the starting location search box
 $("#newStartButton").click(function()
 {
   $("#searchBox").show();
   $("#destinationCardInstructions").hide();
   $("#destinationCardTitle").html("Add another destination to your trip here.");
 });
+
+//---------------------------------------------------------------------------------------
