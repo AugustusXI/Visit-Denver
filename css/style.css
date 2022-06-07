@@ -52,6 +52,14 @@ select.show{
 
 }
 
+#mapRadioTitle{
+  margin-left: 30px;
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+
+}
+
 #waypointButton{
   display: inline-block;
   padding: 20px;
