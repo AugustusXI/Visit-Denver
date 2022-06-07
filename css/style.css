@@ -6,6 +6,18 @@ select.show{
   overflow-y: scroll;
 }
 
+#destinationCardTitle{
+  font-size: 125%;
+  font-weight: 400;
+
+}
+
+#destinationCardinstructions{
+  font-size: 125%;
+  font-weight: bold;
+}
+
+
 #map{
   height: 800px;
   width: 65%;
@@ -24,7 +36,6 @@ select.show{
 }
 
 #mapRadio{
-  display: inline-block;
   width: 22%;
 }
 

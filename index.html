@@ -11,7 +11,7 @@
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?123">
   <style>
     body {
       background-image: url();
@@ -93,7 +93,8 @@
             </a>
           </div>
           <div class="card-content">
-            <span class="card-title">Search for your destination</span>
+            <h3 id="destinationCardTitle" class="card-title">Search for your destination</h3>
+            <p id="destinationCardinstructions">(You must first click the Start trip from my last (current) destination button) </p>
             <p>Search for a destination here.  You can search for an address or places like Denver Union Station or Denver Natural History Museum.  Please include the city for best search results!  You may also click on a location to set your destination</p>
             <div class="nav-wrapper">
               <form id="destination">
