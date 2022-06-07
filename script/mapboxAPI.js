@@ -74,7 +74,8 @@ map.setMaxBounds(bounds);
 
 
 $("#destinationSearchBox").hide();
-// $("#waypointButton").hide();
+$("#waypointButton").hide();
+$("#newStartButton").hide();
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
 async function getRoute(end) 
@@ -232,8 +233,9 @@ $("#searchSelectD").change(function()
     essential: true 
     });
     $("#waypointButton").show();
-    currentDestination = searchSelectD.options[searchSelectD.selectedIndex].text
     $("#searchBox").hide();
+    $("#newStartButton").show();
+    currentDestination = searchSelectD.options[searchSelectD.selectedIndex].text
 });
 
 //---------------------------------------------------------------------------------------
