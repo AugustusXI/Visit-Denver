@@ -1,3 +1,20 @@
+#pageTitle{
+  font-size: 24px;
+  padding-left: 80px;
+}
+
+#itinerary{
+  font-size: 24px;
+}
+
+.nav-wrapper ul{
+  padding-right: 80px;
+}
+
+#descriptionDenver{
+  font-size: 20px;
+}
+
 select.show{
   display: block;
 }
