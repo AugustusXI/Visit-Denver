@@ -35,9 +35,9 @@
 </ul>
 <nav>
   <div class="nav-wrapper">
-    <a>Visit Denver!</a>
+    <a id="pageTitle">Visit Denver!</a>
     <ul class="right hide-on-med-and-down">
-      <li><a class="dropdown-trigger"  data-target="dropdown1">Itinerary<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a id="itinerary" class="dropdown-trigger"  data-target="dropdown1">Itinerary<i class="material-icons right">arrow_drop_down</i></a></li>
       </ul>
     </div>
   </nav>
@@ -46,7 +46,7 @@
       <div class="col s12 m12">
         <div class="card-panel teal">
           <h1 class="white-text">About Denver</h1>
-          <span class="white-text">Denver, the capital of Colorado, is an American metropolis dating to the Old West era. 
+          <span id="descriptionDenver" class="white-text">Denver, the capital of Colorado, is an American metropolis dating to the Old West era. 
             Larimer Square, the city’s oldest block, features landmark 19th-century buildings. 
             Museums include the Denver Art Museum, an ultramodern complex known for its collection of indigenous works, and the mansion of famed Titanic survivor Molly Brown. Denver is also a jumping-off point for ski resorts in the nearby Rocky Mountains
           </span>
@@ -54,9 +54,9 @@
       </div>
     </div>
   </section>
-  <div id="searchBox"class="container">
+  <div class="container">
     <div class="row">
-      <div class="col s12 l6">
+      <div id="searchBox" class="col s12 l6">
         <div class="card">
           <div class="card-image">
             <img src="img/curry.jpg" alt="">
@@ -64,11 +64,9 @@
               <i class="material-icons">favorite</i>
             </a>
           </div>
-
-
           <div class="card-content">
             <span class="card-title">Search for a starting location</span>
-            <p>Select your stating location here.</p>
+            <p id="startingPointCardInstructions">Select your stating location here.  You can search for an address, or places like Denver Union Station or Denver Natural History Museum.  Please include the city for best search results!</p>
             <div class="places-search">
               <form id="searchBar">
                 <div class="input-field">
@@ -79,11 +77,11 @@
               </form>
               <select name="searchSelect" id="searchSelect"></select>
             </div>
-          </div>
-          
-          
+          </div>      
         </div>
       </div>
+
+
       <div id="destinationSearchBox" class="col s12 l6">
         <div class="card">
           <div class="card-image">
@@ -93,8 +91,9 @@
             </a>
           </div>
           <div class="card-content">
-            <span class="card-title">Search for your destination</span>
-            <p>Search for a destination here.</p>
+            <span id="destinationCardTitle" class="card-title">Search for your destination</span>
+            <p id="destinationCardInstructions">(You must first click the Start trip from my last (current) destination button.  You may also click below to restore the search box if you prefer.) </p>
+            <p>Search for a destination here.  You can search for an address or places like Denver Union Station or Denver Natural History Museum.  Please include the city for best search results!  You may also click on a location to set your destination</p>
             <div class="nav-wrapper">
               <form id="destination">
                 <div class="food-search">
@@ -114,13 +113,15 @@
       
     </div>
   </div>
+  <p id="mapRadioTitle">Select your mode of travel here:</p>
   <div id="mapRadio">
     <input name="mapRadio" type="radio" value="driving-traffic">&nbsp;&nbsp;Driving Traffic
     <input name="mapRadio" type="radio" value="driving" checked>&nbsp;&nbsp;Driving
     <input name="mapRadio" type="radio" value="cycling">&nbsp;&nbsp;Cycling
     <input name="mapRadio" type="radio" value="walking">&nbsp;&nbsp;Walking
   </div>
-  <button id="waypointButton" type="button">Start from my last destination</button>
+  <button id="waypointButton" type="button">Start trip from my last (current) destination</button>
+  <button id="newStartButton" type="button">Click here to restore the starting location search box</button>
   <div id="map"></div>
   <div id="instructions"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>

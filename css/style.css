@@ -1,3 +1,29 @@
+#pageTitle{
+  font-size: 48px;
+  padding-left: 7%;
+  color: #333;
+}
+
+#itinerary{
+  font-size: 48px;
+  color: #333;
+}
+
+nav{
+  background-image: url(../images/denver-park2400x300.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 250px;
+}
+
+.nav-wrapper ul{
+  padding-right: 7%;
+}
+
+#descriptionDenver{
+  font-size: 20px;
+}
+
 select.show{
   display: block;
 }
@@ -6,41 +32,76 @@ select.show{
   overflow-y: scroll;
 }
 
+.card .card-title{
+  font-size: 32px;
+  font-weight: 400;
+
+}
+
+.card-content p{
+  font-size: 16px;
+}
+
+#destinationCardInstructions{
+  font-size: 20px;
+  font-weight: 500;
+  font-style: italic;
+  color: crimson;
+}
+
+
 #map{
   height: 800px;
   width: 65%;
   display: inline-block;
   padding: 20px;
-  margin: 20px;
+  margin: 20px 30px 30px 30px;
 }
 
 #instructions{
   height: 800px;
   width: 30%;
   display: inline-block;
-  padding: 20px;
   margin: 20px;
 
 }
 
 #mapRadio{
-  padding: 10px;
-  margin: 10px;
-  display: block;
-  width: 35%;
+  width: 22%;
 }
 
 #mapRadio input{
   position: relative;
   opacity: 1;
-  margin-left: 25px;
   pointer-events: auto;
+  margin-left: 30px; 
+
+}
+
+#mapRadioTitle{
+  margin-left: 30px;
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
 
 }
 
 #waypointButton{
-  display: block;
+  display: inline-block;
   padding: 20px;
-  margin: 20px;
+  margin: 0px 30px;
   width: 20%;
+  border-radius: 5px;
+}
+
+#newStartButton{
+  display: inline-block;
+  padding: 20px;
+  margin: 0px 30px;
+  width: 20%;
+  border-radius: 5px;
+}
+
+h6{
+  font-weight: 400;
 }
