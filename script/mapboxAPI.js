@@ -4,7 +4,17 @@
 //
 //  This is the initial code for the mapboxAPI - CAL
 
-
+//  Global variables
+//  Coordinates of the users last destination
+var lastDestinationCoords = [];
+//  Variable to define starting point coordinates
+var start = [-104.9922, 39.7453];
+//  Variable to determine which mode of transportation the user wants to use
+var mode = "driving";
+//  Initial map layer ID
+var layerID = "initialID";
+var lastTripDirections = "";
+var currentDestination = "";
 
 //  Mapbox info - 
 mapboxgl.accessToken = "pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ";
@@ -61,12 +71,6 @@ map.setMaxBounds(bounds);
 
 
 
-//  Variable to define starting point coordinates  --  Allow user to select this either by utilizing the users device location,
-//  or allow user to input an address as their starting point ?
-var lastDestinationCoords = [];
-var start = [-104.9922, 39.7453];
-var mode = "driving";
-var layerID = "initialID";
 
 
 $("#destinationSearchBox").hide();
@@ -75,11 +79,15 @@ $("#waypointButton").hide();
 // create a function to make a directions request
 async function getRoute(end) 
 {
-  // make a directions request - this one uses cycling travel method -- (change or add variable to allow the user to select which mode of travel they would like to use)
+  // make a directions request mode is the mode of travel start and end are coordinates
   const query = await fetch(
     `https://api.mapbox.com/directions/v5/mapbox/${mode}/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
     { method: 'GET' }
     );
+
+    
+
+
   const json = await query.json();
   const data = json.routes[0];
   const route = data.geometry.coordinates;
@@ -124,7 +132,7 @@ const instructions = document.getElementById('instructions');
 const steps = data.legs[0].steps;
 
 let tripInstructions = '';
-
+lastTripDirections = $("#instructions").html();
 if(start[0] !== end[0] || start[1] !== end[1])
 {
 //  Loop to create each step of the route as its own list element
@@ -132,50 +140,17 @@ for (const step of steps)
 {
   tripInstructions += `<li>${step.maneuver.instruction}</li>`;
 }
+if(lastTripDirections)
+{
+  instructions.innerHTML = lastTripDirections + `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+}
+else{
 //  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
-instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min ${mode} </strong></p><ol>${tripInstructions}</ol>`;
+instructions.innerHTML = `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+lastTripDirections = tripInstructions;
 }
 }
-
-//---------------------------------------------------------------------------------
-// map.on('load', function() 
-// {
-//   // make an initial directions request that
-//   // starts and ends at the same location
-//   getRoute(start);
-
-//   // Add starting point to the map
-//   map.addLayer({
-//     id: 'point',
-//     type: 'circle',
-//     source: {
-//       type: 'geojson',
-//       data: {
-//         type: 'FeatureCollection',
-//         features: 
-//         [
-//           {
-//             type: 'Feature',
-//             properties: {},
-//             geometry: 
-//             {
-//               type: 'Point',
-//               coordinates: start
-//             }
-//           }
-//         ]
-//       }
-//     },
-//     paint: 
-//     {
-//       //  Marker size and color
-//       'circle-radius': 10,
-//       'circle-color': '#3887be'
-//     }
-//   });
-  
-// });
-
+}
 
 
 //----------------------------------------------------------------------------------
@@ -239,7 +214,7 @@ $("#searchSelect").change(function()
   setStartingPoint();
   map.flyTo({
     center: start,
-    essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    essential: true 
     });
 });
 
@@ -255,13 +230,14 @@ $("#searchSelectD").change(function()
   // setStartingPoint();
   map.flyTo({
     center: destinationCoords,
-    essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    essential: true 
     });
     $("#waypointButton").show();
+    currentDestination = searchSelectD.options[searchSelectD.selectedIndex].text
 });
 
 //---------------------------------------------------------------------------------------
-
+//  Function to set a starting point on the map. (blue dot)
 function setStartingPoint()
 {
   if (map.getLayer(layerID)) 
@@ -306,7 +282,8 @@ function setStartingPoint()
 
 
 //---------------------------------------------------------------------------------------
-
+//  Click handler for start from last destination button.  This button changes your starting point to
+//  the last destination you selected.
 $("#waypointButton").click(function()
 {
   start = lastDestinationCoords;

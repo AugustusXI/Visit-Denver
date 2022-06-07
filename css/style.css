@@ -39,6 +39,10 @@ select.show{
 #waypointButton{
   display: block;
   padding: 20px;
-  margin: 20px;
+  margin: 30px;
   width: 20%;
+}
+
+h6{
+  font-weight: 400;
 }
