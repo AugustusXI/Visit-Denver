@@ -1,10 +1,12 @@
 #pageTitle{
   font-size: 48px;
-  padding-left: 10%;
+  padding-left: 7%;
+  color: darkslategrey;
 }
 
 #itinerary{
   font-size: 48px;
+  color: darkslategrey;
 }
 
 nav{
@@ -15,7 +17,7 @@ nav{
 }
 
 .nav-wrapper ul{
-  padding-right: 10%;
+  padding-right: 7%;
 }
 
 #descriptionDenver{
