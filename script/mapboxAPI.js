@@ -68,6 +68,9 @@ var start = [-104.9922, 39.7453];
 var mode = "driving";
 var layerID = "initialID";
 
+
+$("#destinationSearchBox").hide();
+$("#waypointButton").hide();
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
 async function getRoute(end) 
@@ -130,7 +133,7 @@ for (const step of steps)
   tripInstructions += `<li>${step.maneuver.instruction}</li>`;
 }
 //  ********  remove cycling icon/character and replace with a simple word describing the travel method   ********
-instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min </strong></p><ol>${tripInstructions}</ol>`;
+instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min ${mode} </strong></p><ol>${tripInstructions}</ol>`;
 }
 }
 
@@ -183,66 +186,12 @@ instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration /
     mode = $("input[name='mapRadio']:checked").val();
     const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
     setDestination(coords);
-    // lastDestinationCoords = coords;
-
-    // const end = {
-    //   type: 'FeatureCollection',
-    //   features: 
-    //   [
-    //     {
-    //       type: 'Feature',
-    //       properties: {},
-    //       geometry: 
-    //       {
-    //         type: 'Point',
-    //         coordinates: coords
-    //       }
-    //     }
-    //   ]
-    // };
-    // if (map.getLayer('end')) 
-    // {
-    //   map.getSource('end').setData(end);
-    // } 
-    // else 
-    // {
-    //   map.addLayer({
-    //     id: 'end',
-    //     type: 'circle',
-    //     source: 
-    //     {
-    //       type: 'geojson',
-    //       data: 
-    //       {
-    //         type: 'FeatureCollection',
-    //         features: 
-    //         [
-    //           {
-    //             type: 'Feature',
-    //             properties: {},
-    //             geometry: 
-    //             {
-    //               type: 'Point',
-    //               coordinates: coords
-    //             }
-    //           }
-    //         ]
-    //       }
-    //     },
-    //     paint: 
-    //     {
-    //       //  Marker size and color
-    //       'circle-radius': 10,
-    //       'circle-color': '#f30'
-    //     }
-    //   });
-    //   $("#mapRadio").hide();
-    // }
-    // getRoute(coords);
+  
   });
 
 
 //---------------------------------------------------------------------------------------
+//  Starting location submit handler
 $("#searchBar").submit(function(e)
 {
   e.preventDefault();
@@ -256,6 +205,8 @@ $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json
     $("#searchSelect").append("<option value=" + response.features[i].geometry.coordinates[0] + ";" + response.features[i].geometry.coordinates[1] + ">" + response.features[i].place_name + "</option>")
   }
   $("#searchSelect").addClass("show");
+  $("#destinationSearchBox").show();
+  
 });
 });
 
@@ -268,12 +219,13 @@ $("#destination").submit(function(e)
 var searchText = encodeURI($("#searchD").val());
 $.get("https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchText + ".json?access_token=pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ&country=us", null, function(response)
 {
-  $("#searchSelectD").empty().append("<option value=\"0\" selected>Select the starting location below</option>");
+  $("#searchSelectD").empty().append("<option value=\"0\" selected>Select your destination below</option>");
 
   for (let i = 0; i < 5; i++) {
     $("#searchSelectD").append("<option value=" + response.features[i].geometry.coordinates[0] + ";" + response.features[i].geometry.coordinates[1] + ">" + response.features[i].place_name + "</option>")
   }
   $("#searchSelectD").addClass("show");
+ 
 });
 });
 
@@ -305,6 +257,7 @@ $("#searchSelectD").change(function()
     center: destinationCoords,
     essential: true // this animation is considered essential with respect to prefers-reduced-motion
     });
+    $("#waypointButton").show();
 });
 
 //---------------------------------------------------------------------------------------
