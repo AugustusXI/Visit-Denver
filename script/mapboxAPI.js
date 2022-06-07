@@ -20,6 +20,7 @@ var currentDestination = "";
 //  initialization of previousDestination for later use in directions instructions
 var previousDestination = "";
 
+//----------------------------------------------------------------------------------
 //  Mapbox info - This does all the work to create the map on page load
 mapboxgl.accessToken = "pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ";
 const map = new mapboxgl.Map({
@@ -29,9 +30,11 @@ const map = new mapboxgl.Map({
   zoom: 17  //  starting zoom level on page load.  This can be changed by a simple roll of the mouse wheel 
 });
 
-
+//----------------------------------------------------------------------------------
 //  Set the boundaries of the map - this has been implemented to set the Colorado border as the bounds
-//  You cannot view more than the state of Colorado with this functionality
+//  You cannot view more than the state of Colorado with this current functionality.  This can be changed at
+//  any time if we wanted to allow the user to search for locations outside the Colorado border
+//  Could implement a variable here to allow user to toggle on and off
 
 const bounds = [
   [-109.02988935088155, 36.99671558478978],
@@ -39,7 +42,7 @@ const bounds = [
 ];
 map.setMaxBounds(bounds);
 
-
+//----------------------------------------------------------------------------------
 
 // map.addControl(
 //   new MapboxDirections({
@@ -49,7 +52,8 @@ map.setMaxBounds(bounds);
 // );
 
 //  Add an address search bar to the map.  
-//  This will be used to search for locations, and could serve to set the start coords
+//  This could be used to search for locations, and could serve to set the start coords
+//  via a user opting in to using their device location allowing the API to find their location
 // map.addControl(
 //   new MapboxGeocoder({
 //   accessToken: mapboxgl.accessToken,
@@ -66,7 +70,7 @@ map.setMaxBounds(bounds);
 
 
 
-
+//----------------------------------------------------------------------------------
 
 //  Hide HTML elements upon page load for later use
 $("#destinationSearchBox").hide();
