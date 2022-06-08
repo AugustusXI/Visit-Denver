@@ -19,6 +19,8 @@ var lastTripDirections = "";
 var currentDestination = "";
 //  initialization of previousDestination for later use in directions instructions
 var previousDestination = "";
+var itineraryCounter = 1;
+var addToItinerary = $("#itinerary" + itineraryCounter);
 
 //----------------------------------------------------------------------------------
 //  Mapbox info - This does all the work to create the map on page load
@@ -146,14 +148,19 @@ for (const step of steps)
 if(lastTripDirections)
 {
   //  If there are existing directions for a last trip concatenate new trip directions to last trip directions
-  instructions.innerHTML = lastTripDirections + `<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+  instructions.innerHTML = lastTripDirections + `<input type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+  // itineraryCounter++
 }
 else{
 //  Install initial trip directions and store them to lastTripDirections for later use
-instructions.innerHTML = `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+instructions.innerHTML = `<input type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?
+<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+
+
 }
 lastTripDirections = tripInstructions;
 previousDestination = currentDestination;
+itineraryCounter++
 }
 }
 
@@ -380,5 +387,15 @@ $("#newStartButton").click(function()
   $("#destinationCardInstructions").hide();
   $("#destinationCardTitle").html("Add another destination to your trip here.");
 });
+
+//---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 //---------------------------------------------------------------------------------------

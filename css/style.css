@@ -68,6 +68,12 @@ select.show{
   margin: 20px;
 }
 
+#instructions input{
+  opacity: 1;
+  position: relative;
+  pointer-events: auto;
+}
+
 #mapInstructionsContainer{
   display: flex;
 }
