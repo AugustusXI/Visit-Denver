@@ -19,8 +19,10 @@ var lastTripDirections = "";
 var currentDestination = "";
 //  initialization of previousDestination for later use in directions instructions
 var previousDestination = "";
-var itineraryCounter = 1;
+var itineraryCounter = 0;
 var addToItinerary = $("#itinerary" + itineraryCounter);
+var itineraryListArray = [];
+var destinations = [];
 
 //----------------------------------------------------------------------------------
 //  Mapbox info - This does all the work to create the map on page load
@@ -148,16 +150,16 @@ for (const step of steps)
 if(lastTripDirections)
 {
   //  If there are existing directions for a last trip concatenate new trip directions to last trip directions
-  instructions.innerHTML = lastTripDirections + `<input type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+  instructions.innerHTML = lastTripDirections + `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
   // itineraryCounter++
 }
 else{
 //  Install initial trip directions and store them to lastTripDirections for later use
-instructions.innerHTML = `<input type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?
+instructions.innerHTML = `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?
 <h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
-
-
 }
+
+destinations.push(currentDestination);
 lastTripDirections = tripInstructions;
 previousDestination = currentDestination;
 itineraryCounter++
@@ -257,6 +259,8 @@ $("#searchSelectD").change(function()
     $("#destinationCardTitle").html("Would you like to add another destination to your trip?");
     $("#destinationCardInstructions").show();
     $("#mapRadioTitle").hide();
+    $("#searchD").prop("disabled", true);
+    $("#searchSelectD").prop("disabled", true);
 });
 
 //---------------------------------------------------------------------------------------
@@ -313,6 +317,8 @@ $("#waypointButton").click(function()
 {
   start = lastDestinationCoords;
   setStartingPoint();
+  $("#searchD").prop("disabled", false);
+  $("#searchSelectD").prop("disabled", false);
 });
 
 
@@ -389,8 +395,25 @@ $("#newStartButton").click(function()
 });
 
 //---------------------------------------------------------------------------------------
+//  click handler to build itinerary.  Being held in local storage
+$("#generateItinerary").click(function(){
+  // localStorage.removeItem("UsersItinerary");
+  localStorage.clear();
+  itineraryListArray = [];
 
-
+  $(".itineraryCheckbox").each(function()
+  { 
+    
+    if(this.checked)
+    {
+      
+      itineraryListArray.push(destinations[this.value.substr(4)]);
+    }
+    
+  });
+  localStorage.setItem("UsersItinerary", JSON.stringify(itineraryListArray));
+  console.log(itineraryListArray);
+});
 
 
 
