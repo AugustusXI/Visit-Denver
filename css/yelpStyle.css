@@ -19,8 +19,12 @@
     margin: auto;
     padding: 20px;
     border: 10px solid #c41200;
-    width: 80%;
+    width: 50%;
     border-radius: 25px;
+  }
+  .modal-content img {
+    border: 2px solid black;
+    filter: drop-shadow(0 0 0.75rem  rgba(0,0,0,0.4));
   }
   
   /* The Close Button */
