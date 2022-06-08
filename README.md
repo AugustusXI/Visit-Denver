@@ -36,5 +36,8 @@ Github Pages Link:
 		https://augustusxi.github.io/Visit-Denver/
 
 
+![Alt text](/./images/Screenshots/Screen%20Shot%202022-06-08%20at%205.07.13%20PM.png)
+![Alt text](/./images/Screenshots/Screen%20Shot%202022-06-08%20at%205.07.20%20PM.png)
+![Alt text](/./images/Screenshots/Screen%20Shot%202022-06-08%20at%205.07.37%20PM.png)
 
 
