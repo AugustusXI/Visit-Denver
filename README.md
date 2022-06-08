@@ -33,7 +33,7 @@ Technologies Used:
 		CSS Framework: Materialize
 
 Github Pages Link: 
-		https://augustusxi.github.io/Visit-Denver/#!
+		https://augustusxi.github.io/Visit-Denver/
 
 
 
