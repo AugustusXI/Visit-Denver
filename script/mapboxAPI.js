@@ -23,7 +23,7 @@ var itineraryCounter = 0;
 var addToItinerary = $("#itinerary" + itineraryCounter);
 var itineraryListArray = [];
 var destinations = [];
-
+var itinerary = document.getElementById('dropdown1');
 //----------------------------------------------------------------------------------
 //  Mapbox info - This does all the work to create the map on page load
 mapboxgl.accessToken = "pk.eyJ1IjoidmVzdXJvMzAiLCJhIjoiY2wzbWF1MXNwMDJ0MTNkbXV5b2Jsb29jbCJ9.XUukxisLocgMFsuDcyDoDQ";
@@ -395,6 +395,7 @@ $("#newStartButton").click(function()
 });
 
 //---------------------------------------------------------------------------------------
+
 //  click handler to build itinerary.  Being held in local storage
 $("#generateItinerary").click(function(){
   // localStorage.removeItem("UsersItinerary");
@@ -413,6 +414,13 @@ $("#generateItinerary").click(function(){
   });
   localStorage.setItem("UsersItinerary", JSON.stringify(itineraryListArray));
   console.log(itineraryListArray);
+  itinerary.innerHTML = '';
+  itineraryListArray.forEach((item) =>{ 
+  var listItem = document.createElement('li')
+  listItem.textContent = item
+  itinerary.appendChild(listItem)
+  } )
+
 });
 
 
