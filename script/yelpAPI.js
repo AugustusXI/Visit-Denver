@@ -31,7 +31,7 @@ function saveSearch(event)
         {
           console.log(data)
           console.log(data.businesses[0])
-          getReviews(data.businesses[0].alias)
+          getReviews(data.businesses[0])
         }
         )}
         else{
@@ -41,9 +41,9 @@ function saveSearch(event)
   }
 
 // ------------------------------------------------------------------------------
-function getReviews(alias)
+function getReviews(businessInfo)
 {
-  fetch ("https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + alias + "/reviews",
+  fetch ("https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/" + businessInfo.alias + "/reviews",
   {
     method: "GET",
     headers:
@@ -58,7 +58,7 @@ function getReviews(alias)
       {
         result.json().then(function (data) 
         {
-          modalHandler();
+          modalHandler(businessInfo, data);
           console.log(data);
         }
         )}
@@ -67,20 +67,24 @@ function getReviews(alias)
         } 
       })
 }
-
 // ------------------------------------------------------------------------------
 //this is to make the api call on the selection of a destination
 $('#searchSelectD').change(saveSearch);
 
 // ------------------------------------------------------------------------------
-function modalHandler() 
+function modalHandler(businessInfo, reviewInfo) 
 {
     // Get the modal
-  var modal = $('#myModal');
+  var modal = document.getElementById('myModal');
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
-  console.log($('#searchD'))
-  console.log(modal)
+  $("#modalReviews").append("<h1>" + businessInfo.name + "</h1>")
+  $("#modalReviews").append("<img class='modalImg' src='" + businessInfo.image_url + "' alt ='" + businessInfo.name + " image'>")
+  $("#modalReviews").append("<p> Price: " + businessInfo.price + "</p>")
+  $("#modalReviews").append("<h5> Reviews: </h5>")
+  for (let i = 0; i < reviewInfo.reviews.length; i++) {
+    $("#modalReviews").append("<p>" + reviewInfo.reviews[i].text + "<a href ='" + reviewInfo.reviews[i].url + "'> Full Review</a></p>")
+  }
   // make modal display 
   modal.style.display = "block";
   
@@ -88,7 +92,6 @@ function modalHandler()
   span.onclick = function() {
     modal.style.display = "none";
   }
-
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (event.target == modal) {
