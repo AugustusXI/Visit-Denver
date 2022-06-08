@@ -1,13 +1,16 @@
-let yelpRequestURL = "https://api.yelp.com/v3/businesses/search?term=food,restaurants,drink,cafes&location=Denver&categories=food,restaurants,All"
-let autocompleteURL = "https://api.yelp.com/v3/autocomplete?text=del&latitude=39.7392&longitude=104.9903"
+let yelpRequestURL = "https://api.yelp.com/v3/businesses/search?term=food,restaurants,drink,cafes&location=Denver&categories=food,restaurants,All";
+let autocompleteURL = "https://api.yelp.com/v3/autocomplete?text=del&latitude=39.7392&longitude=104.9903";
 let apiKey = 'pvzvB7jQZHeR9y2ed-VZ0rPwPWVnYYTMsXP7D4A3downW0uTM62QUVIahorS8voPTS18BK_LL4vc4tzQKba8wOlFgw5KSKu6c-y7kB59sYU0O0kCWDr1uJAlx9SOYnYx';
 
 // ------------------------------------------------------------------------------
 function saveSearch(event) 
 {
   event.preventDefault();
+  // get value from  the choice made on the dropdown box 
   let coordinates = $("#searchSelectD").val().trim().split(";");
+  // a little bit of magic to get the full array of business names
   let searchQuery = searchSelectD.options[searchSelectD.selectedIndex].text.split(",")
+  // select the most relevant i.e. the first name in the array and convert to a string the URL can read
   searchQuery = searchQuery[0].replaceAll(" ", "-")
   console.log(searchQuery)
   console.log(searchSelectD.options[searchSelectD.selectedIndex].text)
@@ -62,9 +65,6 @@ function getReviews(businessInfo)
           console.log(data);
         }
         )}
-        else{
-          // console.log(data.features[0].properties.address);
-        } 
       })
 }
 // ------------------------------------------------------------------------------
@@ -91,11 +91,13 @@ function modalHandler(businessInfo, reviewInfo)
   // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
     modal.style.display = "none";
+    $("#modalReviews").empty()
   }
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
+      $("#modalReviews").empty()
     }
   }
 }
