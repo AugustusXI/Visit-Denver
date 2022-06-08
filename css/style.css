@@ -124,3 +124,11 @@ h6{
 
   }
 }
+
+@media screen and (max-width: 600px){
+#mapRadio{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+}

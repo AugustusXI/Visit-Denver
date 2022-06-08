@@ -127,19 +127,23 @@
       
     </div>
   </div>
+  <!-- Map radio buttons -->
   <p id="mapRadioTitle">Select your mode of travel here:</p>
   <div id="mapRadio">
-    <input name="mapRadio" type="radio" value="driving-traffic">&nbsp;&nbsp;Driving Traffic
-    <input name="mapRadio" type="radio" value="driving" checked>&nbsp;&nbsp;Driving
-    <input name="mapRadio" type="radio" value="cycling">&nbsp;&nbsp;Cycling
-    <input name="mapRadio" type="radio" value="walking">&nbsp;&nbsp;Walking
+    <div><input name="mapRadio" type="radio" value="driving-traffic">&nbsp;&nbsp;Driving Traffic</div>
+    <div><input name="mapRadio" type="radio" value="driving" checked>&nbsp;&nbsp;Driving</div>
+    <div><input name="mapRadio" type="radio" value="cycling">&nbsp;&nbsp;Cycling</div>
+    <div><input name="mapRadio" type="radio" value="walking">&nbsp;&nbsp;Walking</div>
   </div>
+  <!-- Buttons to set another trip and restore the search box upon user request -->
   <button id="waypointButton" type="button">Start trip from my last (current) destination</button>
   <button id="newStartButton" type="button">Click here to restore the starting location search box</button>
+  <!-- Map and directions container (flex to support responsive design) -->
   <div id="mapInstructionsContainer">
-  <div id="map"></div>
-  <div id="instructions"></div>
+    <div id="map"></div>
+    <div id="instructions"></div>
   </div>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./script/script.js"></script>
