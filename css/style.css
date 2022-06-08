@@ -123,4 +123,10 @@ h6{
     flex-direction: column;
 
   }
+
+  #mapRadio{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
 }
