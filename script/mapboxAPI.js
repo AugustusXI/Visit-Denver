@@ -153,7 +153,7 @@ if(lastTripDirections)
 {
   //  If there are existing directions for a last trip concatenate new trip directions to last trip directions
   newDirectionsHTML = `<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
-  instructions.innerHTML = lastTripDirections + `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?${newDirectionsHTML}>`;
+  instructions.innerHTML = lastTripDirections + `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?${newDirectionsHTML}`;
   // itineraryCounter++
 }
 else{
