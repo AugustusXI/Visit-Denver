@@ -9,6 +9,10 @@
   color: #333;
 }
 
+nav ul a{
+  display: none;
+}
+
 nav{
   background-image: url(../images/denver-park2400x300.png);
   background-repeat: no-repeat;
@@ -22,6 +26,11 @@ nav{
 
 #descriptionDenver{
   font-size: 20px;
+}
+
+#dropdown1{
+  width: auto !important;
+
 }
 
 select.show{
@@ -102,7 +111,7 @@ select.show{
 
 }
 
-#waypointButton{
+#waypointButton, #generateItinerary{
   display: inline-block;
   padding: 20px;
   margin: 10px 30px;

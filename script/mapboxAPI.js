@@ -23,6 +23,7 @@ var itineraryCounter = 0;
 var addToItinerary = $("#itinerary" + itineraryCounter);
 var itineraryListArray = [];
 var destinations = [];
+var newDirectionsHTML = "";
 
 //----------------------------------------------------------------------------------
 //  Mapbox info - This does all the work to create the map on page load
@@ -81,6 +82,7 @@ $("#destinationSearchBox").hide();
 $("#waypointButton").hide();
 $("#newStartButton").hide();
 $("#destinationCardInstructions").hide();
+$("#generateItinerary").hide();
 //----------------------------------------------------------------------------------
 // create a function to make a directions request
 async function getRoute(end) 
@@ -150,16 +152,18 @@ for (const step of steps)
 if(lastTripDirections)
 {
   //  If there are existing directions for a last trip concatenate new trip directions to last trip directions
-  instructions.innerHTML = lastTripDirections + `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+  newDirectionsHTML = `<h5>Directions from: ${previousDestination},</h5><h5>To: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+  instructions.innerHTML = lastTripDirections + `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?${newDirectionsHTML}>`;
   // itineraryCounter++
 }
 else{
 //  Install initial trip directions and store them to lastTripDirections for later use
+newDirectionsHTML = `<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
 instructions.innerHTML = `<input class="itineraryCheckbox" type="checkbox" id="itinerary${itineraryCounter}" name="itinerary${itineraryCounter}" value="Trip${itineraryCounter}"> Add destination to itinerary?
-<h5>Directions to: ${currentDestination}</h5><h6>Trip duration: ${Math.floor(data.duration / 60)} min ${mode}</h6><ol>${tripInstructions}</ol>`;
+${newDirectionsHTML}`;
 }
 
-destinations.push(currentDestination);
+destinations.push(newDirectionsHTML);
 lastTripDirections = tripInstructions;
 previousDestination = currentDestination;
 itineraryCounter++
@@ -259,6 +263,7 @@ $("#searchSelectD").change(function()
     $("#destinationCardTitle").html("Would you like to add another destination to your trip?");
     $("#destinationCardInstructions").show();
     $("#mapRadioTitle").hide();
+    $("#generateItinerary").show();
     $("#searchD").prop("disabled", true);
     $("#searchSelectD").prop("disabled", true);
 });
@@ -397,28 +402,37 @@ $("#newStartButton").click(function()
 //---------------------------------------------------------------------------------------
 //  click handler to build itinerary.  Being held in local storage
 $("#generateItinerary").click(function(){
+  var index = "";
   // localStorage.removeItem("UsersItinerary");
   localStorage.clear();
   itineraryListArray = [];
+  $("#dropdown1").empty();
 
   $(".itineraryCheckbox").each(function()
   { 
     
     if(this.checked)
     {
+      index = this.value.substr(4);
+      itineraryListArray.push(destinations[index]);
+      index = Number(index)+1;
+      // console.log("<li \"id=d"+ (index - 1) + "\"> Destination " + index + "</li>");
+      $("#dropdown1").append("<li id=\"d"+ (index - 1) + "\"> Destination " + index + "</li>");   
       
-      itineraryListArray.push(destinations[this.value.substr(4)]);
     }
     
   });
   localStorage.setItem("UsersItinerary", JSON.stringify(itineraryListArray));
-  console.log(itineraryListArray);
+  $("nav ul a").show();
 });
 
-
-
-
-
-
-
 //---------------------------------------------------------------------------------------
+
+$("#dropdown1").click(function(e)
+{
+  // console.log(e);
+
+  $("#instructions").empty().html(JSON.parse(localStorage.getItem("UsersItinerary"))[e.target.id.substr(1)]);
+  
+
+});
