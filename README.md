@@ -1,37 +1,40 @@
 # Visit-Denver
- Project one Group 8
- Title: To DO in Denver
-Description: List of popular attraction near you in Denver. An easy way to build an itinerary for a trip or fun weekend in the Denver area. 
+ Project One Group 8
+ Title: Visit Denver
+Description: Application to aid in navigation around denver as well as finding good places to eat near you. 
+
+Notes: If yelp functionality is not running then this link must be visited and a demo server set up by clicking the button. https://cors-anywhere.herokuapp.com/corsdemo
+
 User Story: 
-As a visitor to Denver
-	I want to find fun things to do near me
-	So that I won’t be bored
-Provide Search bar
-	Displays a list of attractions/restaurants near me
-	That shows distance from destination
-When the user clicks on a list item
-	Then they see a google maps listing/website for attraction
-I want to refine my search options based on my interests. 
-I want to see reviews of destination on Yelp
-I want to be able to save preferred destinations to a list/Itinerary
-	When I click the favorites Icon
-	Then I see a list of starred searches
-	
-I want to be able to refine my search based on Filters
-	When I click the Sort By button 
-	Then I see a list of filter options
-		Price
-		Distance
-		Review Strength
-		Food Type
-		Attractions
+		As a visitor to Denver
+			I want to find fun things to do near me
+			So that I won’t be bored
+		
+		I want to be able to easily search for restaurants
+			When I use the search bar
+			Then I can search for my desired restaurant
 
-I want to save and view most recent searches 
-when I click on search bar
- then the results are clickable
+		I want to see reviews of destination on Yelp
+			When I select a destination
+			then I see prices, and reviews of that location
+
+		I want to be able to save preferred destinations to a list/Itinerary
+			When I click the favorites Icon
+			Then I see a list of starred searches
+			
+		I want to save and view most recent searches 
+			when I click on search bar
+			then the results are clickable
+
+Technologies Used:
+		API:	Yelp
+				Mapbox
+				Corsanywhere
+		CSS Framework: Materialize
+
+Github Pages Link: 
+		https://augustusxi.github.io/Visit-Denver/
 
 
-API:	Yelp
-Mapbox
-CSS Framework: Materialize, Bulma, UI Kit
+
 
