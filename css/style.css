@@ -62,7 +62,7 @@ select.show{
 #instructions{
   height: 800px;
   min-height: 600px;
-  flex: 33%;
+  flex: 40%;
   /* width:100%; */
   display: inline-block;
   margin: 20px;
@@ -75,7 +75,7 @@ select.show{
 #mapRadio{
   display: flex;
   flex-wrap: wrap;
-  max-width: 22%;
+  flex: 25%;
   width: 100%;
   min-width: fit-content;
 }
@@ -99,16 +99,18 @@ select.show{
 #waypointButton{
   display: inline-block;
   padding: 20px;
-  margin: 0px 30px;
+  margin: 10px 30px;
   max-width: 20%;
+  min-width: 390px;
   border-radius: 5px;
 }
 
 #newStartButton{
   display: inline-block;
   padding: 20px;
-  margin: 0px 30px;
+  margin: 10px 30px;
   max-width: 20%;
+  min-width: 390px; 
   border-radius: 5px;
 }
 
@@ -116,14 +118,9 @@ h6{
   font-weight: 400;
 }
 
-@media screen and (max-width: 750px){
+@media screen and (max-width: 850px){
   #mapInstructionsContainer{
     flex-direction: column;
 
   }
-
-  /* #mapRadio{
-    display: flex;
-    flex-direction: column;
-  } */
 }
