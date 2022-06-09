@@ -111,7 +111,7 @@ select.show{
 
 }
 
-#waypointButton, #generateItinerary{
+#waypointButton, #generateItinerary, #newStartButton{
   display: inline-block;
   padding: 20px;
   margin: 10px 30px;
@@ -119,8 +119,8 @@ select.show{
   min-width: 390px;
   border-radius: 12px;
 }
-
-/* #newStartButton{
+/* 
+#newStartButton{
   display: inline-block;
   padding: 20px;
   margin: 10px 30px;

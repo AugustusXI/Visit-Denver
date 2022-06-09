@@ -394,9 +394,11 @@ function setDestination(coords)
 //  a new starting location via the starting location search box
 $("#newStartButton").click(function()
 {
-  $("#searchBox").show();
-  $("#destinationCardInstructions").hide();
-  $("#destinationCardTitle").html("Add another destination to your trip here.");
+  // $("#searchBox").show();
+  // $("#destinationCardInstructions").hide();
+  // $("#destinationCardTitle").html("Add another destination to your trip here.");
+  $("#instructions").empty();
+  
 });
 
 //---------------------------------------------------------------------------------------
@@ -417,7 +419,7 @@ $("#generateItinerary").click(function(){
       itineraryListArray.push(destinations[index]);
       index = Number(index)+1;
       // console.log("<li \"id=d"+ (index - 1) + "\"> Destination " + index + "</li>");
-      $("#dropdown1").append("<li id=\"d"+ (index - 1) + "\"> Destination " + index + "</li>");   
+      $("#dropdown1").append("<a><li id=\"d"+ (index - 1) + "\"> Destination " + index + "</li></a>");   
       
     }
     
