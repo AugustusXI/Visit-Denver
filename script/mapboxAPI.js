@@ -2,7 +2,7 @@
 //
 //
 //
-//  This is the code for the mapboxAPI - Created by Chris Ledford
+//  This is the code for the mapboxAPI - Created by Chris Ledford (Vesuro30 on GitHub)
 
 //  Global variables
 //  Coordinates of the users last destination
@@ -398,7 +398,7 @@ $("#newStartButton").click(function()
   // $("#destinationCardInstructions").hide();
   // $("#destinationCardTitle").html("Add another destination to your trip here.");
   $("#instructions").empty();
-  
+
 });
 
 //---------------------------------------------------------------------------------------
