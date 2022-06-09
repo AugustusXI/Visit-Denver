@@ -1,7 +1,7 @@
 # Visit-Denver
  Project One Group 8
  Title: Visit Denver
-Description: Application to aid in navigation around denver as well as finding good places to eat near you. 
+Description: Application to aid in navigation around denver as well as finding good places to eat near you. We used the mapbox APi in order to provide directions to and from known 					locations. The Api also provides some search functionality and the ability to get coordinates and addresses of inputed locations. We used the Yelp Api to then take that 					information and feed back details of their business such as phone number and reviews. We also created the ability to create an itinerary and have the saved selections persist 				for multiple sessions. 
 
 Notes: If yelp functionality is not running then this link must be visited and a demo server set up by clicking the button. https://cors-anywhere.herokuapp.com/corsdemo
 
