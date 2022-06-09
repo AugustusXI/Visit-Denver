@@ -24,6 +24,12 @@ nav{
   padding-right: 7%;
 }
 
+.nav-wrapper{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 #descriptionDenver{
   font-size: 20px;
 }
@@ -116,17 +122,17 @@ select.show{
   padding: 20px;
   margin: 10px 30px;
   max-width: 20%;
-  min-width: 390px;
+  min-width: 385px;
   border-radius: 12px;
 }
-/* 
-#newStartButton{
+
+/* #newStartButton, #generateItinerary, #newStartButton{
   display: inline-block;
   padding: 20px;
-  margin: 10px 30px;
+  margin: 10px 10px;
   max-width: 20%;
   min-width: 390px; 
-  border-radius: 5px;
+  border-radius: 12px;
 } */
 
 h6{
@@ -144,6 +150,9 @@ h6{
 #mapRadio{
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+}
+.nav-wrapper{
   flex-direction: column;
 }
 }
