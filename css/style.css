@@ -164,4 +164,9 @@ h6{
   padding-left: 9%;
   
 }
+#waypointButton, #generateItinerary, #newStartButton{
+  padding: 20px 5px;
+  margin: 10px;
+  min-width: 300px;
+}
 }
