@@ -409,10 +409,10 @@ $("#generateItinerary").click(function(){
   localStorage.clear();
   itineraryListArray = [];
   $("#dropdown1").empty();
-
+//  Check each check box to see if it is checked
   $(".itineraryCheckbox").each(function()
   { 
-    
+    //  If checked manipulate arrays to generate itinerary list items
     if(this.checked)
     {
       index = this.value.substr(4);
@@ -424,16 +424,17 @@ $("#generateItinerary").click(function(){
     }
     
   });
+  //  Place users selected itinerary in list items
   localStorage.setItem("UsersItinerary", JSON.stringify(itineraryListArray));
   $("nav ul a").show();
 });
 
 //---------------------------------------------------------------------------------------
-
+//  Click handler for the itinerary list items
 $("#dropdown1").click(function(e)
 {
   // console.log(e);
-
+//  parse info to bring it out of local storage and use to repopulate directions
   $("#instructions").empty().html(JSON.parse(localStorage.getItem("UsersItinerary"))[e.target.id.substr(1)]);
   
 
