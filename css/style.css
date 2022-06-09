@@ -156,13 +156,12 @@ h6{
 .nav-wrapper{
   flex-direction: column;
   flex-wrap: wrap;
-  padding-left: 7%;
-  padding-right: 0;
+
 }
 
 #itinerary{
   color: #fff;
-  padding-left: 7%;
+  padding-left: 9%;
   
 }
 }
