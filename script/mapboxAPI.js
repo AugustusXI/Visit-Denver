@@ -2,7 +2,7 @@
 //
 //
 //
-//  This is the code for the mapboxAPI - Created by Chris Ledford (Vesuro30 on GitHub)
+//  ************************************This is the code for the mapboxAPI - This code was created by Chris Ledford (Vesuro30 on GitHub)***********************************************************
 
 //  Global variables
 //  Coordinates of the users last destination
